@@ -30,11 +30,11 @@ func Apigw(ctx context.Context, c *app.RequestContext) {
 
 	// 如果有?，那么就是有参数，先分割，否则获取不到正确的MethodName
 	sep1 := "?"
-	spiltStr1 := strings.Split(extrainfo, sep1)
-	spiltStr := spiltStr1[0]
+	spiltStrByQustionMark := strings.Split(extrainfo, sep1)
+	spiltStrWithoutQustionMark := spiltStrByQustionMark[0]
 
 	sep := "/"
-	spiltStr := strings.Split(extrainfo, sep)
+	spiltStr := strings.Split(spiltStrWithoutQustionMark, sep)
 	for _, v := range spiltStr {
 		fmt.Print(v + " ")
 	}

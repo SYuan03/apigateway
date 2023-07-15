@@ -26,7 +26,7 @@ func ProvideService(serviceName string, methodName string, c *app.RequestContext
 		return "", err
 	}
 	jsonString := string(jsonData)
-	//fmt.Println("Mes: ", jsonString)
+	fmt.Println("Mes: ", jsonString)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
 		return "", err

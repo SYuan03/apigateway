@@ -10,18 +10,50 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 
 	"fmt"
+
+	"strings"
 )
+
 
 // Apigw .
 func Apigw(ctx context.Context, c *app.RequestContext) {
 	// 获取整个请求的url
-	header := c.Request.Header
-	body := c.Request.Body
+	extrainfo := c.Param("extrainfo")
 
-	fmt.Println(header)
-	fmt.Println(body)
+	// 获取请求的url中的参数，先分割
+	// 如果超过三项就报错
+	// 如果只有两项，那么第一项是ServiceName，第二项是MethodName
+	// 不足两项就报错
+	// 根据'/'分割
+	sep := "/"
+	spiltStr := strings.Split(extrainfo, sep)
+	for _, v := range spiltStr {
+		fmt.Print(v + " ")
+	}
+	if (len(spiltStr) > 3) {
+		c.JSON(consts.StatusBadRequest, utils.H{
+			"message": "Too many parameters!",
+		})
+		return
+	}
+
+	if (len(spiltStr) < 2) {
+		c.JSON(consts.StatusBadRequest, utils.H{
+			"message": "Too few parameters!",
+		})
+		return
+	}
+
+	ServiceName := spiltStr[0]
+	MethodName := spiltStr[1]
+	var IdlVersion string
+	if (len(spiltStr) == 3) {
+		IdlVersion = spiltStr[2]
+	}
+	
+	
 
 	c.JSON(consts.StatusOK, utils.H{
-		"message": "Apigw",
+		"message": "Apigw Success!",
 	})
 }

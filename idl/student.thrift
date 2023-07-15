@@ -19,11 +19,11 @@ struct RegisterResp {
 }
 
 struct QueryReq {
-    1: required i32 id(api.query='id')
+    1: required i32 id(api.body='id')
 }
 
 //----------------------service-------------------
 service StudentService {
     RegisterResp Register(1: Student student)(api.post = '/add-student-info')
-    Student Query(1: QueryReq req)(api.get = '/query')
+    Student Query(1: QueryReq req)(api.post = '/query')
 }

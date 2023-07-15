@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	//TODO 注册
 	handler := &StudentServiceImpl{}
 	handler.InitDB()
 	addr, _ := net.ResolveTCPAddr("tcp", ":9990")

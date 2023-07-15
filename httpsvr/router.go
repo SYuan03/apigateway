@@ -11,5 +11,6 @@ import (
 func customizedRegister(r *server.Hertz) {
 	r.GET("/ping", handler.Ping)
 
+	r.POST("/apigw", handler.Apigw)
 	// your code ...
 }

@@ -15,8 +15,13 @@ var Clients = make(map[string]genericclient.Client)
 
 // name servicename
 func GetCli(serviceName string) genericclient.Client {
-
-	return Clients[serviceName]
+	value, exist := Clients[serviceName]
+	if exist {
+		return value
+	} else {
+		InitCli(serviceName)
+		return Clients[serviceName]
+	}
 }
 
 func InitCli(serviceName string) {

@@ -12,7 +12,9 @@ import (
 
 func ProvideService(serviceName string, methodName string, c *app.RequestContext, ctx context.Context) (string, error) {
 	var data interface{}
+
 	err := json.Unmarshal(c.Request.Body(), &data)
+
 	if err != nil {
 		fmt.Println("Error:", err)
 		return "", err
@@ -24,11 +26,12 @@ func ProvideService(serviceName string, methodName string, c *app.RequestContext
 		return "", err
 	}
 	jsonString := string(jsonData)
-
+	fmt.Println("Mes: ", jsonString)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
 		return "", err
 	}
+
 	Cli := clientprovider.GetCli(serviceName)
 	resp, err := Cli.GenericCall(ctx, methodName, jsonString)
 	if err != nil {

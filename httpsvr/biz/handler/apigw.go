@@ -58,6 +58,7 @@ func Apigw(ctx context.Context, c *app.RequestContext) {
 	if err != nil {
 		fmt.Println("err in return ProvideService")
 		fmt.Println(err.Error())
+		fmt.Println("IdlVersion: ", IdlVersion)
 		c.JSON(consts.StatusInternalServerError, utils.H{
 			"message": err.Error(),
 		})

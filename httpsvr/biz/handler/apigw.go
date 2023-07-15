@@ -12,6 +12,8 @@ import (
 	"fmt"
 
 	"strings"
+
+	myrouting "nju/apigw/routing"
 )
 
 
@@ -30,14 +32,14 @@ func Apigw(ctx context.Context, c *app.RequestContext) {
 	for _, v := range spiltStr {
 		fmt.Print(v + " ")
 	}
-	if (len(spiltStr) > 3) {
+	if len(spiltStr) > 3 {
 		c.JSON(consts.StatusBadRequest, utils.H{
 			"message": "Too many parameters!",
 		})
 		return
 	}
 
-	if (len(spiltStr) < 2) {
+	if len(spiltStr) < 2 {
 		c.JSON(consts.StatusBadRequest, utils.H{
 			"message": "Too few parameters!",
 		})
@@ -47,13 +49,23 @@ func Apigw(ctx context.Context, c *app.RequestContext) {
 	ServiceName := spiltStr[0]
 	MethodName := spiltStr[1]
 	var IdlVersion string
-	if (len(spiltStr) == 3) {
+	if len(spiltStr) == 3 {
 		IdlVersion = spiltStr[2]
 	}
 	
-	
+	resp, err := myrouting.ProvideService(ServiceName, MethodName, c, ctx)
+
+	if err != nil {
+		fmt.Println("err in return ProvideService")
+		fmt.Println(err.Error())
+		c.JSON(consts.StatusInternalServerError, utils.H{
+			"message": err.Error(),
+		})
+		return
+	}
 
 	c.JSON(consts.StatusOK, utils.H{
 		"message": "Apigw Success!",
+		"resp": resp,
 	})
 }

@@ -60,8 +60,6 @@ func (s *StudentServiceImpl) InitDB() {
 // Register implements the StudentServiceImpl interface.
 func (s *StudentServiceImpl) Register(ctx context.Context, student *demo.Student) (resp *demo.RegisterResp, err error) {
 	// *TODO: Your code here...
-	//db, err := gorm.Open(sqlite.Open("foo.db"), &gorm.Config{})
-	//fmt.Printf("%v", student)
 	var stuRes *Student
 	result := s.Db.Table("students").First(&stuRes, student.Id)
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {

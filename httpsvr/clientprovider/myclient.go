@@ -19,13 +19,13 @@ func GetCli(serviceName string) genericclient.Client {
 	if exist {
 		return value
 	} else {
-		InitCli(serviceName)
+		UpdateCli(serviceName)
 		return Clients[serviceName]
 	}
 }
 
-func InitCli(serviceName string) {
-	//Todo need to get port and idlcontext by servicename
+func UpdateCli(serviceName string) {
+	//Todo: need to get port and idlcontext by servicename
 
 	url := "http://13.72.82.105:8888/"
 	reqUrl := fmt.Sprintf("%sgetIdl?serviceName=%s", url, serviceName)
@@ -42,8 +42,6 @@ func InitCli(serviceName string) {
 	if err != nil {
 		fmt.Printf("Error reading response body for %s: %s\n", url, err.Error())
 	}
-	//fmt.Println("idlPath", string(body))
-
 	idlPath := string(body)
 	idlPath = "../idl/student.thrift"
 	p, err := generic.NewThriftFileProvider(idlPath)

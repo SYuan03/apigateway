@@ -4,9 +4,17 @@ package main
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"nju/apigw/clientprovider"
+	"time"
 )
 
 func main() {
+	go func() {
+		for {
+			clientprovider.UpdateCli("studentservice")
+			time.Sleep(time.Second * 10)
+		}
+	}()
 	h := server.Default()
 
 	register(h)

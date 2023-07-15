@@ -18,8 +18,6 @@ import (
 
 // Apigw .
 func Apigw(ctx context.Context, c *app.RequestContext) {
-	fmt.Println("asdaasssssssssss")
-
 	// 获取整个请求的url
 	extrainfo := c.Param("extrainfo")
 

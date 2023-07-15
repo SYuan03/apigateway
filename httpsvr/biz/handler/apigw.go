@@ -27,6 +27,12 @@ func Apigw(ctx context.Context, c *app.RequestContext) {
 	// 如果只有两项，那么第一项是ServiceName，第二项是MethodName
 	// 不足两项就报错
 	// 根据'/'分割
+
+	// 如果有?，那么就是有参数，先分割，否则获取不到正确的MethodName
+	sep1 := "?"
+	spiltStr1 := strings.Split(extrainfo, sep1)
+	spiltStr := spiltStr1[0]
+
 	sep := "/"
 	spiltStr := strings.Split(extrainfo, sep)
 	for _, v := range spiltStr {

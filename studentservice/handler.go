@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	demo "nju/apigw/kitex_gen/demo"
@@ -82,6 +83,7 @@ func (s *StudentServiceImpl) Register(ctx context.Context, student *demo.Student
 func (s *StudentServiceImpl) Query(ctx context.Context, req *demo.QueryReq) (resp *demo.Student, err error) {
 	//db, err := gorm.Open(sqlite.Open("foo.db"), &gorm.Config{})
 	var stuRes *Student
+	fmt.Print(req.Id)
 	result := s.Db.Table("students").First(&stuRes, req.Id)
 	if result.Error == nil {
 		return model2Student(stuRes), nil

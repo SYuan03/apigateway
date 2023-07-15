@@ -16,9 +16,10 @@ import (
 	myrouting "nju/apigw/routing"
 )
 
-
 // Apigw .
 func Apigw(ctx context.Context, c *app.RequestContext) {
+	fmt.Println("asdaasssssssssss")
+
 	// 获取整个请求的url
 	extrainfo := c.Param("extrainfo")
 
@@ -58,7 +59,7 @@ func Apigw(ctx context.Context, c *app.RequestContext) {
 	if len(spiltStr) == 3 {
 		IdlVersion = spiltStr[2]
 	}
-	
+
 	resp, err := myrouting.ProvideService(ServiceName, MethodName, c, ctx)
 
 	if err != nil {
@@ -73,6 +74,6 @@ func Apigw(ctx context.Context, c *app.RequestContext) {
 
 	c.JSON(consts.StatusOK, utils.H{
 		"message": "Apigw Success!",
-		"resp": resp,
+		"resp":    resp,
 	})
 }

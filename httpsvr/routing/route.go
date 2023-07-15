@@ -11,6 +11,9 @@ import (
 )
 
 func ProvideService(serviceName string, methodName string, c *app.RequestContext, ctx context.Context) (string, error) {
+	fmt.Println("ServiceName: ", serviceName)
+	fmt.Println("MethodName: ", methodName)
+
 	var data interface{}
 
 	err := json.Unmarshal(c.Request.Body(), &data)

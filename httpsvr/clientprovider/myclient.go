@@ -36,7 +36,6 @@ func UpdateCli(serviceName string) {
 		return
 	}
 	defer resp.Body.Close()
-
 	// 读取响应正文的内容
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

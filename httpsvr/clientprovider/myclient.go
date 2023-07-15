@@ -17,6 +17,7 @@ var Clients = make(map[string]genericclient.Client)
 func GetCli(serviceName string) genericclient.Client {
 	value, exist := Clients[serviceName]
 	if exist {
+		fmt.Println("exist")
 		return value
 	} else {
 		UpdateCli(serviceName)
@@ -43,6 +44,7 @@ func UpdateCli(serviceName string) {
 	}
 	idlPath := string(body)
 	idlPath = "../idl/student.thrift"
+
 	p, err := generic.NewThriftFileProvider(idlPath)
 	if err != nil {
 		panic(err)

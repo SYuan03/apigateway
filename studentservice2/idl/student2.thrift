@@ -1,4 +1,4 @@
-namespace go demo
+namespace go demo2
 
 //--------------------request & response--------------
 struct College {
@@ -11,6 +11,7 @@ struct Student {
     2: required string name(api.body='name'),
     3: required College college(api.body='college'),
     4: optional list<string> email(api.body='email'),
+    5: required string gender(api.body='gender'),
 }
 
 struct RegisterResp {
@@ -24,6 +25,6 @@ struct QueryReq {
 
 //----------------------service-------------------
 service StudentService {
-    RegisterResp Register(1: Student student)(api.post = '/add-student-info')
-    Student Query(1: QueryReq req)(api.post = '/query')
+    RegisterResp Register(1: Student student)(api.post = '/add-student-info1')
+    Student Query(1: QueryReq req)(api.post = '/query1')
 }

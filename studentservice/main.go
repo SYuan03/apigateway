@@ -22,7 +22,7 @@ func main() {
 		log.Fatal(err)
 	}
 	svr := studentservice.NewServer(handler, server.WithRegistry(r), server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
-		ServiceName: "studentservice",
+		ServiceName: "studentserviceA",
 	}), server.WithServiceAddr(addr))
 
 	err = svr.Run()

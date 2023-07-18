@@ -1,4 +1,4 @@
-# API Gateway部署文档
+# API Gateway部署文档（一，运行环境的部署）
 
 系统环境：Ubuntu22.04.2
 

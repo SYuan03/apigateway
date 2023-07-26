@@ -5,13 +5,13 @@ import (
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/genericclient"
 	"github.com/cloudwego/kitex/pkg/generic"
+	"github.com/cloudwego/kitex/pkg/loadbalance"
 	etcd "github.com/kitex-contrib/registry-etcd"
 	"log"
 )
 
 var Clients = make(map[string]genericclient.Client)
 
-// name servicename
 func GetCli(serviceName string) genericclient.Client {
 	value, exist := Clients[serviceName]
 	if exist {
@@ -58,7 +58,7 @@ func UpdateCli(serviceName string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	cli, err := genericclient.NewClient(serviceName, g, client.WithResolver(r))
+	cli, err := genericclient.NewClient(serviceName, g, client.WithResolver(r), client.WithLoadBalancer(loadbalance.NewWeightedRandomBalancer()))
 	if err != nil {
 		panic(err)
 	}

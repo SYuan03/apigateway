@@ -13,13 +13,14 @@ import (
 )
 
 var Clients = make(map[string]genericclient.Client)
+var IdlVersion = make(map[string]string)
 
-func GetCli(serviceName string) genericclient.Client {
+func GetCli(serviceName string, idlVersion string) genericclient.Client {
 	value, exist := Clients[serviceName]
 	if exist {
-		fmt.Println("exist")
 		return value
 	} else {
+		IdlVersion[serviceName] = idlVersion
 		UpdateCli(serviceName)
 		return Clients[serviceName]
 	}
@@ -27,7 +28,7 @@ func GetCli(serviceName string) genericclient.Client {
 
 func UpdateCli(serviceName string) {
 	//Todo: need to get port and idlcontext by servicename
-	url := "http://127.0.0.1:6666/idl/query?service_name=StudentServiceA" + "&version=1"
+	url := "http://127.0.0.1:6666/idl/query?service_name=" + serviceName + "&version=" + IdlVersion[serviceName]
 	resp, err := http.Get(url)
 	if err != nil {
 		fmt.Println("Error getting response:", err)

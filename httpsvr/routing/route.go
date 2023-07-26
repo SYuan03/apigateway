@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func ProvideService(serviceName string, methodName string, c *app.RequestContext, ctx context.Context) (string, error) {
+func ProvideService(serviceName string, methodName string, c *app.RequestContext, ctx context.Context, idlVersion string) (string, error) {
 	var data interface{}
 
 	err := json.Unmarshal(c.Request.Body(), &data)
@@ -32,7 +32,7 @@ func ProvideService(serviceName string, methodName string, c *app.RequestContext
 		return "", err
 	}
 
-	Cli := clientprovider.GetCli(serviceName)
+	Cli := clientprovider.GetCli(serviceName, idlVersion)
 	resp, err := Cli.GenericCall(ctx, methodName, jsonString)
 	if err != nil {
 		fmt.Println(Cli)

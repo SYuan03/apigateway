@@ -53,12 +53,12 @@ func Apigw(ctx context.Context, c *app.RequestContext) {
 
 	ServiceName := spiltStr[0]
 	MethodName := spiltStr[1]
-	var IdlVersion string
+	var IdlVersion string = "1"
 	if len(spiltStr) == 3 {
 		IdlVersion = spiltStr[2]
 	}
 
-	resp, err := myrouting.ProvideService(ServiceName, MethodName, c, ctx)
+	resp, err := myrouting.ProvideService(ServiceName, MethodName, c, ctx, IdlVersion)
 
 	if err != nil {
 		fmt.Println("err in return ProvideService")

@@ -173,7 +173,7 @@ Query
 
 ### 一、注册性能测试（由于studentservice逻辑基本一致，所以仅对更复杂的serviceB进行测试）
 
-![registerInfo](testDoc\registerInfo.png)
+![registerInfo](testDoc/registerInfo.png)
 
 
 

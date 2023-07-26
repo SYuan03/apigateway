@@ -34,9 +34,9 @@ func Apigw(ctx context.Context, c *app.RequestContext) {
 
 	sep := "/"
 	spiltStr := strings.Split(spiltStrWithoutQustionMark, sep)
-	for _, v := range spiltStr {
-		fmt.Print(v + " ")
-	}
+	//for _, v := range spiltStr {
+	//	//fmt.Print(v + " ")
+	//}
 	if len(spiltStr) > 3 {
 		c.JSON(consts.StatusBadRequest, utils.H{
 			"message": "Too many parameters!",

@@ -9,11 +9,13 @@ import (
 )
 
 func main() {
+	clientprovider.IdlVersion["studentserviceA"] = "1"
+	clientprovider.IdlVersion["studentserviceB"] = "1"
 	go func() {
 		for {
-			clientprovider.UpdateCli("studentservice")
-			clientprovider.UpdateCli("studentservice2")
-			time.Sleep(time.Second * 10)
+			clientprovider.UpdateCli("studentserviceA")
+			clientprovider.UpdateCli("studentserviceB")
+			time.Sleep(time.Second * 15)
 		}
 	}()
 	h := server.Default()

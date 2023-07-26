@@ -1,12 +1,12 @@
 package main
 
 import (
-	"Jiao-Yiyang/d3/kitex_gen/demo2/studentservice"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
 	etcd "github.com/kitex-contrib/registry-etcd"
 	"log"
 	"net"
+	"nju/apigw/kitex_gen/demo2/studentservice"
 )
 
 func main() {

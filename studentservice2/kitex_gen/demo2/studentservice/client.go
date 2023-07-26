@@ -3,10 +3,10 @@
 package studentservice
 
 import (
-	demo2 "Jiao-Yiyang/d3/kitex_gen/demo2"
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
+	demo2 "nju/apigw/kitex_gen/demo2"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.

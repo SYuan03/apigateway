@@ -3,10 +3,10 @@
 package studentservice
 
 import (
-	demo2 "Jiao-Yiyang/d3/kitex_gen/demo2"
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
+	demo2 "nju/apigw/kitex_gen/demo2"
 )
 
 func serviceInfo() *kitex.ServiceInfo {

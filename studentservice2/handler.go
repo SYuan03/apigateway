@@ -1,11 +1,11 @@
 package main
 
 import (
-	"Jiao-Yiyang/d3/kitex_gen/demo2"
 	"context"
 	"errors"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"nju/apigw/kitex_gen/demo2"
 	"regexp"
 	"strings"
 	"time"

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Jiao-Yiyang/d3/kitex_gen/demo2"
 	"context"
+	"nju/apigw/kitex_gen/demo2"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

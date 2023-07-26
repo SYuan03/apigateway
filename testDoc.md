@@ -187,7 +187,7 @@ ab -n 100000 -c 10 -T application/json -p request.json -H "Content-Type:applicat
 
 使用ab工具，总共的请求执行数为100000次，并发执行数为10，参数位于request.json中，对http://127.0.0.1:8888/apigw/studentserviceB/Register进行测试，测试结果如下：
 
-![abtestRegister](testDOC/abtestRegister.jpg)
+![abtestRegister](testDoc/abtestRegister.jpg)
 
 **测试结果：在10并发的情况下，面对100000条请求，共花费72.114秒处理所有请求。考虑到设备的性能局限，每秒处理的请求数仍然达到了1386.70 requests/s。对于每个用户而言，每条指令的等待时间很短。因此在这种情况下的表现基本满足期望。**
 

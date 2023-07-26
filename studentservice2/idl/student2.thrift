@@ -1,6 +1,5 @@
 namespace go demo2
 
-//--------------------request & response--------------
 struct College {
     1: required string name(go.tag = 'json:"name"'),
     2: string address(go.tag = 'json:"address"'),
@@ -23,7 +22,6 @@ struct QueryReq {
     1: required i32 id(api.body='id')
 }
 
-//----------------------service-------------------
 service StudentService {
     RegisterResp Register(1: Student student)(api.post = '/add-student-info1')
     Student Query(1: QueryReq req)(api.post = '/query1')

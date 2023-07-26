@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"errors"
-	"fmt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	demo "nju/apigw/kitex_gen/demo"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -61,24 +61,14 @@ func (s *StudentServiceImpl) InitDB() {
 // Register implements the StudentServiceImpl interface.
 func (s *StudentServiceImpl) Register(ctx context.Context, student *demo.Student) (resp *demo.RegisterResp, err error) {
 	// *TODO: Your code here...
+	if vaild, mes := studentInfoCheck(student); !vaild {
+		return &demo.RegisterResp{
+			Success: false,
+			Message: mes,
+		}, nil
+	}
 	var stuRes *Student
 	// 检查学生对象是否包含空值
-	if student.Id <= 0 {
-		return nil, errors.New("invalid student ID")
-	}
-
-	if student.Name == "" {
-		return nil, errors.New("missing student name")
-	}
-
-	if student.College == nil || student.College.Name == "" || student.College.Address == "" {
-		return nil, errors.New("missing college information")
-	}
-
-	if len(student.Email) == 0 {
-		return nil, errors.New("no email provided")
-	}
-
 	result := s.Db.Table("students").First(&stuRes, student.Id)
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		result = s.Db.Table("students").Create(student2Model(student))
@@ -96,14 +86,42 @@ func (s *StudentServiceImpl) Register(ctx context.Context, student *demo.Student
 	}, nil
 }
 
-// Query implements the StudentServiceImpl interface.
 func (s *StudentServiceImpl) Query(ctx context.Context, req *demo.QueryReq) (resp *demo.Student, err error) {
-	//db, err := gorm.Open(sqlite.Open("foo.db"), &gorm.Config{})
 	var stuRes *Student
-	fmt.Print(req.Id)
 	result := s.Db.Table("students").First(&stuRes, req.Id)
 	if result.Error == nil {
 		return model2Student(stuRes), nil
 	}
 	return nil, result.Error
+}
+
+func studentInfoCheck(student *demo.Student) (bool, string) {
+	if student.Id <= 0 {
+		return false, "invalid student ID"
+	}
+
+	if student.Name == "" {
+		return false, "missing student name"
+	}
+
+	if student.College == nil || student.College.Name == "" || student.College.Address == "" {
+		return false, "missing college information"
+	}
+
+	if len(student.Email) == 0 {
+		return false, "no email provided"
+	}
+
+	for _, email := range student.Email {
+		if !isValidEmail(email) {
+			return false, "invalid email format"
+		}
+	}
+	return true, ""
+}
+
+func isValidEmail(email string) bool {
+	// 此处使用了 Go 的正则表达式库 regexp 匹配 email 格式
+	re := regexp.MustCompile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+	return re.MatchString(email)
 }

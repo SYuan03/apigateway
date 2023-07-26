@@ -2,8 +2,8 @@
 package studentservice
 
 import (
-	demo2 "Jiao-Yiyang/d3/kitex_gen/demo2"
 	server "github.com/cloudwego/kitex/server"
+	demo2 "nju/apigw/kitex_gen/demo2"
 )
 
 // NewServer creates a server.Server with the given handler and options.

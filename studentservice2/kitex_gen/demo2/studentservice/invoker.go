@@ -3,8 +3,8 @@
 package studentservice
 
 import (
-	demo2 "Jiao-Yiyang/d3/kitex_gen/demo2"
 	server "github.com/cloudwego/kitex/server"
+	demo2 "nju/apigw/kitex_gen/demo2"
 )
 
 // NewInvoker creates a server.Invoker with the given handler and options.

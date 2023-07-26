@@ -11,7 +11,7 @@ go run .
 
 ## 终端二、启动etcd
 
-```bash
+```bash 
 etcd --log-level debug
 ```
 

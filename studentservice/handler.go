@@ -62,6 +62,23 @@ func (s *StudentServiceImpl) InitDB() {
 func (s *StudentServiceImpl) Register(ctx context.Context, student *demo.Student) (resp *demo.RegisterResp, err error) {
 	// *TODO: Your code here...
 	var stuRes *Student
+	// 检查学生对象是否包含空值
+	if student.Id <= 0 {
+		return nil, errors.New("invalid student ID")
+	}
+
+	if student.Name == "" {
+		return nil, errors.New("missing student name")
+	}
+
+	if student.College == nil || student.College.Name == "" || student.College.Address == "" {
+		return nil, errors.New("missing college information")
+	}
+
+	if len(student.Email) == 0 {
+		return nil, errors.New("no email provided")
+	}
+
 	result := s.Db.Table("students").First(&stuRes, student.Id)
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		result = s.Db.Table("students").Create(student2Model(student))

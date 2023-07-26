@@ -7,7 +7,9 @@ import (
 	"github.com/cloudwego/kitex/pkg/generic"
 	"github.com/cloudwego/kitex/pkg/loadbalance"
 	etcd "github.com/kitex-contrib/registry-etcd"
+	"io/ioutil"
 	"log"
+	"net/http"
 )
 
 var Clients = make(map[string]genericclient.Client)
@@ -25,21 +27,21 @@ func GetCli(serviceName string) genericclient.Client {
 
 func UpdateCli(serviceName string) {
 	//Todo: need to get port and idlcontext by servicename
-	//url := "http://13.72.82.105:8888/"
-	//reqUrl := fmt.Sprintf("%sgetIdl?serviceName=%s", url, serviceName)
-	//// 发送HTTP GET请求给idl管理平台 获取idl文件的相对路径
-	//resp, err := http.Get(reqUrl)
-	//if err != nil {
-	//	fmt.Printf("Error getting response for %s: %s\n", url, err.Error())
-	//	return
-	//}
-	//defer resp.Body.Close()
-	//// 读取响应正文的内容
-	//body, err := ioutil.ReadAll(resp.Body)
-	//if err != nil {
-	//	fmt.Printf("Error reading response body for %s: %s\n", url, err.Error())
-	//}
-	//idlPath := string(body)
+	url := "http://127.0.0.1:6666/idl/query?service_name=StudentServiceA" + "&version=1"
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("Error getting response:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Error reading response body:", err)
+		return
+	}
+
+	fmt.Println(string(body))
 	idlPath := "../idl/student2.thrift"
 	if serviceName == "studentserviceA" {
 		idlPath = "../idl/student.thrift"

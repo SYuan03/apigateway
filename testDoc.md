@@ -195,7 +195,7 @@ ab -n 100000 -c 10 -T application/json -p request.json -H "Content-Type:applicat
 
 ### 二、查询性能测试
 
-![image-20230726162829819](testDoc\image-20230726162829819.png)
+![image-20230726162829819](testDoc/image-20230726162829819.png)
 
 以上为ab测试的用例参数，位于request.json文件中
 

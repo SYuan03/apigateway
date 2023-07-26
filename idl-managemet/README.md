@@ -133,4 +133,12 @@ body如下
 curl -X GET "http://127.0.0.1:6666/idl/query?service_name=StudentSeviceA&version=1" -w "\n"
 ```
 
-![image-20230726204013488](README/image-20230726204013488.png)
+![image-20230726204013488](https://s2.loli.net/2023/07/26/sP6a4i19ycKZNJb.png)
+
+
+
+### 服务器
+
+在服务器端也部署了一个idl-manage的服务
+
+![image-20230726224735538](https://s2.loli.net/2023/07/26/ETk9Jt8b6WgrZ3X.png)

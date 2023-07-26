@@ -32,10 +32,12 @@ func ProvideService(serviceName string, methodName string, c *app.RequestContext
 		return "", err
 	}
 
-	Cli := clientprovider.GetCli(serviceName, idlVersion)
+	Cli, err := clientprovider.GetCli(serviceName, idlVersion)
+	if err != nil {
+		return "", err
+	}
 	resp, err := Cli.GenericCall(ctx, methodName, jsonString)
 	if err != nil {
-		fmt.Println(Cli)
 		return "", err
 	}
 

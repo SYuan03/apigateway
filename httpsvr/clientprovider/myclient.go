@@ -2,6 +2,7 @@ package clientprovider
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/genericclient"
@@ -16,17 +17,23 @@ import (
 var Clients = make(map[string]genericclient.Client)
 var IdlVersion = make(map[string]string)
 
-func GetCli(serviceName string, idlVersion string) genericclient.Client {
+func GetCli(serviceName string, idlVersion string) (genericclient.Client, error) {
 	if IdlVersion[serviceName] != idlVersion {
 		IdlVersion[serviceName] = idlVersion
-		UpdateCli(serviceName)
+		err := UpdateCli(serviceName)
+		if err != nil {
+			return nil, err
+		}
 	}
 	value, exist := Clients[serviceName]
 	if exist {
-		return value
+		return value, nil
 	} else {
-		UpdateCli(serviceName)
-		return Clients[serviceName]
+		err := UpdateCli(serviceName)
+		if err != nil {
+			return nil, err
+		}
+		return Clients[serviceName], nil
 	}
 }
 
@@ -36,40 +43,43 @@ type Response struct {
 	Content string `json:"content"`
 }
 
-func UpdateCli(serviceName string) {
+func UpdateCli(serviceName string) error {
 	//Todo: need to get port and idlcontext by servicename
 	url := "http://127.0.0.1:6666/idl/query?service_name=" + serviceName + "&version=" + IdlVersion[serviceName]
 	//fmt.Println(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		fmt.Println("Error getting response:", err)
-		return
+		return err
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Error reading response body:", err)
-		return
+		return err
 	}
 
 	var response map[string]interface{}
 	err = json.Unmarshal(body, &response)
 	if err != nil {
 		fmt.Println("Error decoding response body:", err)
-		return
+		return err
 	}
 
 	content, ok := response["content"].(string)
 	if !ok {
 		fmt.Println("Error decoding content field")
-		return
+		return err
 	}
-	fmt.Println(content)
+	//fmt.Println(content)
+	if content == "" {
+		return errors.New("No such service or wrong version information ")
+	}
 	err = ioutil.WriteFile("../idl/student.thrift", []byte(content), 0644)
 	if err != nil {
 		fmt.Println("Error writing to file:", err)
-		return
+		return err
 	}
 	idlPath := "../idl/student.thrift"
 
@@ -91,5 +101,5 @@ func UpdateCli(serviceName string) {
 		panic(err)
 	}
 	Clients[serviceName] = cli
-
+	return nil
 }
